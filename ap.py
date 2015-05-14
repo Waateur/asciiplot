@@ -33,28 +33,28 @@ __all__ = ['markers', 'ACanvas', 'AData', 'AFigure',
            '__version__', '__author__']
 
 
-markers = { '-' : u'None' ,     # solid line style
-            ',': u'\u2219',     # point marker
-            '.': u'\u2218',     # pixel marker
-            '.f': u'\u2218',    # pixel marker
-            'o': u'\u25CB',     # circle marker
-            'of': u'\u25CF',    # circle marker
-            'v': u'\u25BD',     # triangle_down marker
-            'vf': u'\u25BC',    # filler triangle_down marker
-            '^': u'\u25B3',     # triangle_up marker
-            '^f': u'\u25B2',    # filled triangle_up marker
-            '<':  u'\u25C1',    # triangle_left marker
-            '<f': u'\u25C0',    # filled triangle_left marker
-            '>': u'\u25B7',     # triangle_right marker
-            '>f': u'\u25B6',    # filled triangle_right marker
-            's': u'\u25FD',     # square marker
-            'sf': u'\u25FC',    # square marker
-            '*': u'\u2606',     # star marker
-            '*f': u'\u2605',    # star marker
-            '+': u'\u271A',     # plus marker
-            'x': u'\u274C',     # x marker
-            'd':  u'\u25C7',    # diamond marker
-            'df':  u'\u25C6'    # filled diamond marker
+markers = { '-' : 'None' ,     # solid line style
+            ',': '\u2219',     # point marker
+            '.': '\u2218',     # pixel marker
+            '.f': '\u2218',    # pixel marker
+            'o': '\u25CB',     # circle marker
+            'of': '\u25CF',    # circle marker
+            'v': '\u25BD',     # triangle_down marker
+            'vf': '\u25BC',    # filler triangle_down marker
+            '^': '\u25B3',     # triangle_up marker
+            '^f': '\u25B2',    # filled triangle_up marker
+            '<':  '\u25C1',    # triangle_left marker
+            '<f': '\u25C0',    # filled triangle_left marker
+            '>': '\u25B7',     # triangle_right marker
+            '>f': '\u25B6',    # filled triangle_right marker
+            's': '\u25FD',     # square marker
+            'sf': '\u25FC',    # square marker
+            '*': '\u2606',     # star marker
+            '*f': '\u2605',    # star marker
+            '+': '\u271A',     # plus marker
+            'x': '\u274C',     # x marker
+            'd':  '\u25C7',    # diamond marker
+            'df':  '\u25C6'    # filled diamond marker
             }
 
 
@@ -168,7 +168,7 @@ class AData(object):
             marker for the data.
             see constructor for marker descriptions
         """
-        if marker in [None, 'None', u'None', '']:
+        if marker in [None, 'None', 'None', '']:
             self.plot_slope = True
             self.marker = ''
         elif marker[0] == '_':
@@ -436,9 +436,9 @@ class AFigure(object):
         self.new_line = newline
         self.plot_labels = plot_labels
         self.output_buffer = None
-        self.tickSymbols = u'\u253C'  # "+"
-        self.x_axis_symbol = u'\u2500'  # u"\u23bc"  # "-"
-        self.y_axis_symbol = u'\u2502'  # "|"
+        self.tickSymbols = '\u253C'  # "+"
+        self.x_axis_symbol = '\u2500'  # u"\u23bc"  # "-"
+        self.y_axis_symbol = '\u2502'  # "|"
         self.data = []
 
     def xlim(self, vmin=None, vmax=None):
@@ -460,13 +460,13 @@ class AFigure(object):
         zero_x = self.get_coord(0, self.canvas.min_x, self.canvas.x_step, limits=[1, self.canvas.x_size])
         if zero_x >= self.canvas.x_size:
             zero_x = self.canvas.x_size - 1
-        for y in xrange(self.canvas.y_size):
+        for y in range(self.canvas.y_size):
             self.output_buffer[zero_x][y] = self.y_axis_symbol
 
         zero_y = self.get_coord(0, self.canvas.min_y, self.canvas.y_step, limits=[1, self.canvas.y_size])
         if zero_y >= self.canvas.y_size:
             zero_y = self.canvas.y_size - 1
-        for x in xrange(self.canvas.x_size):
+        for x in range(self.canvas.x_size):
             self.output_buffer[x][zero_y] = self.x_axis_symbol  # u'\u23bc'
 
         self.output_buffer[zero_x][zero_y] = self.tickSymbols  # "+"
@@ -476,11 +476,11 @@ class AFigure(object):
         if slope > _math.tan(3 * _math.pi / 8):
             draw_symbol = "|"
         elif _math.tan(_math.pi / 8) < slope < _math.tan(3 * _math.pi / 8):
-            draw_symbol = u'\u27cb'  # "/"
+            draw_symbol = '\u27cb'  # "/"
         elif abs(slope) < _math.tan(_math.pi / 8):
             draw_symbol = "-"
         elif slope < _math.tan(-_math.pi / 8) and slope > _math.tan(-3 * _math.pi / 8):
-            draw_symbol = u'\u27CD'  # "\\"
+            draw_symbol = '\u27CD'  # "\\"
         elif slope < _math.tan(-3 * _math.pi / 8):
             draw_symbol = "|"
         else:
@@ -542,7 +542,7 @@ class AFigure(object):
         y_zero_coord = self.get_coord(0, self.canvas.min_y, self.canvas.y_step, limits=[1, self.canvas.y_size])
 
         if start[0] - end[0] == 0:
-            draw_symbol = u"|"
+            draw_symbol = "|"
         elif start[1] - end[1] == 0:
             draw_symbol = '-'
         else:
@@ -581,7 +581,7 @@ class AFigure(object):
         xy.sort(key=lambda c: c[0])
         prev_p = xy[0]
         e_xy = enumerate(xy)
-        e_xy.next()
+        next(e_xy)
         for i, (xi, yi) in e_xy:
             line = self._plot_line(prev_p, (xi, yi), data)
             prev_p = (xi, yi)
@@ -603,7 +603,7 @@ class AFigure(object):
                 if self.canvas.coords_inside_buffer(x_coord, y_coord):
                     y0_coord = self.get_coord(0, self.canvas.min_y, self.canvas.y_step)
                     if self.draw_axes:
-                        if (y_coord == y0_coord) and (draw_symbol == u"\u23bc"):
+                        if (y_coord == y0_coord) and (draw_symbol == "\u23bc"):
                             draw_symbol = "="
                     self.output_buffer[x_coord][y_coord] = draw_symbol
 
@@ -642,7 +642,7 @@ class AFigure(object):
 
         if y_seq is None:
             y_seq = x_seq[:]
-            x_seq = range(len(y_seq))
+            x_seq = list(range(len(y_seq)))
 
         data = AData(x_seq, y_seq, marker=marker, plot_slope=plot_slope)
         self.append_data(data)
@@ -684,7 +684,7 @@ def plot(x, y=None, marker=None, shape=(50, 20), draw_axes=True,
 
     p = AFigure(**flags)
 
-    print p.plot(x, y, marker=marker, plot_slope=plot_slope)
+    print(p.plot(x, y, marker=marker, plot_slope=plot_slope))
 
 
 def steppify(x, y):
@@ -800,13 +800,13 @@ def imshow(im, extent=None, width=50, ncolors=16):
 
     string = ""
     if not _clr:
-        for h in xrange(height):  # first go through the height,  otherwise will roate
-            for w in xrange(width):
+        for h in range(height):  # first go through the height,  otherwise will roate
+            for w in range(width):
                 string += color[int(_im[w, h] * (ncolors - 1) )]
             string += "\n"
     else:
-        for h in xrange(height):  # first go through the height,  otherwise will roate
-            for w in xrange(width):
+        for h in range(height):  # first go through the height,  otherwise will roate
+            for w in range(width):
                 string += color[int(sum(_im[w, h]) * (ncolors - 1) )]
             string += "\n"
-    print string
+    print(string)
